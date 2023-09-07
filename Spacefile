@@ -1,0 +1,10 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: jollymax
+    src: ./
+    engine: python3.9
+    primary: true
+    run: uvicorn app:app
+    public_routes:
+      - "/*"
