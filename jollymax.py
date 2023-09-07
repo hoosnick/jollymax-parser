@@ -5,7 +5,7 @@ import aiohttp
 
 
 class JollyMaxParser:
-    def __init__(self, user_id):
+    def __init__(self, user_id: int):
         self.user_id = user_id
 
         self.headers = {
@@ -21,18 +21,18 @@ class JollyMaxParser:
 
     async def get_token(self) -> t.Union[str, None]:
         json_data = {
-            'terminalType': 'PC_H5',
+            'terminalType':    'PC_H5',
             'accessTokenType': 'access_token',
-            'bizType': 'userLogin',
-            'deviceId': 'ddd05e88be7640ffbc949adc705b5cee',
-            'loginType': 'visitor',
+            'bizType':         'userLogin',
+            'deviceId':        'ddd05e88be7640ffbc949adc705b5cee',
+            'loginType':       'visitor',
             'loginInfo': {
-                'country': 'tr',
-                'language': 'en',
+                'country':    'tr',
+                'language':   'en',
                 'deviceType': 'mobile',
             },
             'version': '1.0',
-            'domain': 'www.jollymax.com',
+            'domain':  'www.jollymax.com',
         }
         url = 'https://api.jollymax.com/aggregate-pay-gate/api/gateway'
 
@@ -42,26 +42,24 @@ class JollyMaxParser:
 
     async def fetch_user_info(self):
         token = await self.get_token()
-        if not token:
-            return self._user_info
+        if not token: return self._user_info
         self._token = token
 
         json_data = {
-            'token': token,
-            'appId': 'APP20220811034444301',
-            'country': 'tr',
-            'language': 'en',
-            'appAlias': 'pubg',
-            'goodsId': 'G20230718123400139',
+            'token':     token,
+            'userId':    self.user_id,
+            'appId':     'APP20220811034444301',
+            'country':   'tr',
+            'language':  'en',
+            'appAlias':  'pubg',
+            'goodsId':   'G20230718123400139',
             'payTypeId': '698832',
-            'userId': self.user_id,
-            'domain': 'www.jollymax.com',
+            'domain':    'www.jollymax.com',
         }
         url = 'https://topup-center.shoplay365.com/shareit-topup-center/order/check-uid'
 
         async with self.session.post(url, headers=self.headers, json=json_data) as response:
-            if response.status != 200:
-                return self._user_info
+            if response.status != 200: return self._user_info
 
             data = await response.json()
 
