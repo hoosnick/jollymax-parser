@@ -1,4 +1,4 @@
-# JollyMax Parser
+## **[JollyMax](www.jollymax.com) Parser**
 
 JollyMax Parser is a Python utility for fetching user data from the JollyMax platform, specifically designed for **PUBG Mobile** users.
 
